@@ -137,8 +137,6 @@ When run, our tiny program will produce the following output:
 result { hear: 'Doing okay' }
 ```
 
-input.wire("say->hear", output);
-
 > **🔍✨ What happened here?**
 >
 > 1. The `runOnce` method of the board takes a property bag (a JS object) as its argument.
@@ -150,10 +148,6 @@ input.wire("say->hear", output);
 >    3. pass it along to the next node as `say` property.
 > 5. Since the next node is the `generateText` node, that's the node that receives the `say` property.
 > 6. The `generateText` node takes the `text` property as an input and returns a `completion` property using the PaLM API.
-
-```sh
-result { hear: 'Doing okay.' }
-```
 
 Oh hey! Our program is generating text using PaLM API.
 
