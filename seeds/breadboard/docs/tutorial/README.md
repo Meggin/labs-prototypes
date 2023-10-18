@@ -2,16 +2,35 @@
 
 If you like learning by starting with simple examples that get more complex with each chapter, this guide might be a good fit.
 
-Pre-requisites:
-
-- familiarity with Javascript and Node.
-- `@google-labs/breadboard` and `@google-labs/llm-starter` npm packages installed locally
-- PaLM API key (go [here](https://developers.generativeai.google/tutorials/setup) to obtain one)
-- spirit of adventure
-
 Each chapter is also available as a [Replit](https://replit.com/) project. Look for the "run in replit" link at the end of each chapter.
 
-## Chapter 1: Hello, world?
+## Chapter 1: Generate text with PaLM API
+
+### Set up project
+
+1. Check that you have Node version >=v19.0: 
+
+```ssh
+node -v
+```
+
+2. Update to [current version](https://nodejs.org/en/download/current) if necessary.
+
+3. Get a [PaLM API key](https://developers.generativeai.google/tutorials/setup).
+
+4. Install breadboard:
+
+```ssh
+npm install @google-labs/breadboard`
+```
+
+5. Install [LLM Starter Kit](https://github.com/google/labs-prototypes/tree/main/seeds/llm-starter):
+
+```ssh
+npm install @google-labs/llm-starter
+```
+
+### Create board and kit
 
 At the heart of the library is the concept of a `Board`. Just like for hardware makers, the `Board` is the place where wiring of a prototype happens.
 
@@ -23,69 +42,9 @@ import { Board } from "@google-labs/breadboard";
 const board = new Board();
 ```
 
-Now that you have a board, you can place nodes on it. Think of nodes as the spiritual equivalent of hardware components that a maker might buy at the RadioShack. They are the building blocks of your application.
-
-Let's place a node on the board:
-
-```js
-const input = board.input();
-```
-
-An `input` node is a node that asks for input from the user. It's a good place to start. Now let's place another node:
-
-```js
-const output = board.output();
-```
-
-Now we have two nodes on the board. Let's wire them together:
-
-```js
-input.wire("say->hear", output);
-```
-
-The statement above says: "take the `say` output of the `input` node and wire it to the `hear` input of the `output` node".
-
-Every node has the `wire` method. It always takes two parameters:
-
-- the first parameter describes what to wire, and
-- the second parameter is the node that is being wired with the current node.
-
-Now that we've wired our nodes, we can ask our breadboard to run:
-
-```js
-const result = await board.runOnce({
-  say: "Hello, world?",
-});
-console.log("result", result);
-```
-
-When run, our tiny program will produce the following output:
-
-```sh
-result { hear: 'Hello, world?' }
-```
-
-> **🔍✨ What happened here?** The outcome should be fairly intuitive, but let's go through the process step by step:
->
-> 1. The `runOnce` method of the board takes a property bag (a JS object) as its argument.
-> 2. This bag of properties is then handed to the `input` node.
-> 3. The `input` node is very simple-minded: it just passes the property bag along to the next node.
-> 4. This is where the wiring comes in. When we described our single wire as `say->hear`, we basically said:
->    1. reach into the property bag,
->    2. fish out the `say` property, then
->    3. pass it along to the next node as `say` property.
-> 5. Since the next node is the `output` node, that's the node that receives the `say` property.
-> 6. The `output` node is also pretty simple. It takes the property bag it received and returns it as the of the `runOnce` method.
-
-You can see the source of this program here: [tutorial-1.js](./tutorial-1.js).
-
-[![Static Badge](https://img.shields.io/badge/run%20in%20replit-chapter_1-orange?logo=replit "run in replit: chapter 1")](https://replit.com/@dglazkov/Breadboard-Tutorial-Chapter-1)
-
-## Chapter 2: Wiring more nodes
-
-This is definitely a fun little program, but it's not very useful. Let's add another node to the board. This time, we need a kit: a collection of nodes that are bundled together for a specific purpose.
-
-Because we're here to make generative AI applications, we'll get the [LLM Starter Kit](https://github.com/google/labs-prototypes/tree/main/seeds/llm-starter):
+Now let's add a kit: a collection of nodes that are bundled together for a specific purpose.
+Because we're here to make generative AI applications,
+we'll get the [LLM Starter Kit](https://github.com/google/labs-prototypes/tree/main/seeds/llm-starter):
 
 ```js
 import { Board } from "@google-labs/breadboard";
@@ -98,7 +57,9 @@ const kit = board.addKit(Starter);
 
 The last line of the code snippet above is signficant: it adds a kit to the board. Calling the `addKit` method creates a new instance of the LLM Starter kit that is connected to our board.
 
-Now that we've added the kit, we can use it to add nodes from it:
+### Place nodes on board
+
+Now that you've added a board and kit you have two boards, you can place nodes on them. Think of nodes as the spiritual equivalent of hardware components that a maker might buy at the RadioShack. They are the building blocks of your application.
 
 ```js
 const input = board.input();
@@ -106,16 +67,28 @@ const output = board.output();
 const generateText = kit.generateText();
 ```
 
-The `generateText` node that we've added is a node that uses the [PaLM API](https://developers.generativeai.google/) to generate text. This node takes a `text` property as an input and returns a `completion` property.
+An `input` node asks for input from the user; an `output` node provides output to the user.
 
-All we need to do is wire these properties to `say` and `hear` from before:
+The `generateText` node uses the [PaLM API](https://developers.generativeai.google/) to generate text. This node takes a `text` property as an input and returns a `completion` property.
+
+### Wire node properties
+
+Now we have three nodes on the board. Let's wire them together:
 
 ```js
 input.wire("say->text", generateText);
 generateText.wire("completion->hear", output);
 ```
 
-Now, we have not one, but two wires on the board, connecting our three nodes. There's the `say->text` wire that connects the `input` and `generateText` nodes, and there's the `completion->hear` wire that connects the `generateText` and `output` nodes.
+Every node has the `wire` method. It always takes two parameters:
+
+- the first parameter describes what to wire, and
+- the second parameter is the node that is being wired with the current node.
+
+The statement above says: "take the `say` output of the `input` node and wire it to the `text` input of the `generateText` node".
+The `completion->hear` wire connects the `generateText` and `output` nodes.
+
+### Get API access
 
 To make this program go, we need another node and a wire. The PaLM API behind the `generateText` node requires an API key, so we'll add a `secrets` node to the board:
 
@@ -147,16 +120,41 @@ secrets.wire("PALM_KEY->", generateText);
 
 The statement above says: "wire `secret`'s output named `PALM_KEY` to the `generateText` input named `PALM_KEY`". Because we're wiring output to the input by the same name, we don't have to repeat ourselves.
 
-Our second program is ready as soon as we add the `runOnce` call:
+### Run breadboard
+
+Now that we've wired our nodes, we can ask our breadboard to run once:
 
 ```js
 const result = await board.runOnce({
-  say: "Hi, how are you?",
+  say: "Hi, how are?",
 });
 console.log("result", result);
 ```
 
-When run, our second program will produce output that might look something like this:
+When run, our tiny program will produce the following output:
+
+```sh
+result { hear: 'Doing okay' }
+```
+
+input.wire("say->hear", output);
+
+
+input.wire("say->text", generateText);
+generateText.wire("completion->hear", output);
+The `generateText` node uses the [PaLM API](https://developers.generativeai.google/) to generate text. This node takes a `text` property as an input and returns a `completion` property.
+
+> **🔍✨ What happened here?**
+>
+> 1. The `runOnce` method of the board takes a property bag (a JS object) as its argument.
+> 2. This bag of properties is then handed to the `input` node.
+> 3. The `input` node is very simple-minded: it just passes the property bag along to the next node.
+> 4. This is where the wiring comes in. When we described our wire as `say->text`, we basically said:
+>    1. reach into the property bag,
+>    2. fish out the `say` property, then
+>    3. pass it along to the next node as `say` property.
+> 5. Since the next node is the `generateText` node, that's the node that receives the `say` property.
+> 6. The `generateText` node takes the `text` property as an input and returns a `completion` property using the PaLM API.
 
 ```sh
 result { hear: 'Doing okay.' }
@@ -168,7 +166,7 @@ You can see its source code here: [tutorial-2.js](./tutorial-2.js).
 
 [![Static Badge](https://img.shields.io/badge/run%20in%20replit-chapter_2-orange?logo=replit "run in replit: chapter 2")](https://replit.com/@dglazkov/Breadboard-Tutorial-Chapter-2)
 
-## Chatper 3: Fun with wires
+## Chatper 2: Fun with wires
 
 So far, we've built a fairly simple board. Let's use this board to learn a bit more about convenient shortcuts and ways to wire nodes together.
 
@@ -226,7 +224,7 @@ You can see the source code from this chapter here: [tutorial-3.js](./tutorial-3
 
 [![Static Badge](https://img.shields.io/badge/run%20in%20replit-chapter_3-orange?logo=replit "run in replit: chapter 3")](https://replit.com/@dglazkov/Breadboard-Tutorial-Chapter-3)
 
-## Chapter 4: Saving, loading, and visualizing boards
+## Chapter 3: Saving, loading, and visualizing boards
 
 Once the board is created, it can be used by the program that made it. But what if we want to reuse the board we made?
 
@@ -349,7 +347,7 @@ You can see this chapter's source code here: [tutorial-4.js](./tutorial-4.js).
 
 [![Static Badge](https://img.shields.io/badge/run%20in%20replit-chapter_4-orange?logo=replit "run in replit: chapter 4")](https://replit.com/@dglazkov/Breadboard-Tutorial-Chapter-4)
 
-## Chapter 5: Including other boards
+## Chapter 4: Including other boards
 
 In addition to loading saved boards, we can also include them into our board. For this, we need the `include` node, which acts as a sort of instant board-to-node converter: just give it the URL of a serialized board, and it will pretend as if that whole board is just one node.
 
@@ -454,7 +452,7 @@ You can see the source code for this chapter here: [tutorial-5.js](./tutorial-5.
 
 [![Static Badge](https://img.shields.io/badge/run%20in%20replit-chapter_5-orange?logo=replit "run in replit: chapter 5")](https://replit.com/@dglazkov/Breadboard-Tutorial-Chapter-5)
 
-## Chapter 6: Boards with slots
+## Chapter 5: Boards with slots
 
 Including other boards is nifty, since it allows us to build modular boards. However, sometimes we wish could leave a place in the board where anyone could insert other boards. Programmers call it "dependency injection".
 
@@ -555,7 +553,7 @@ You can see the source code for this chapter here:
 
 [![Static Badge](https://img.shields.io/badge/run%20in%20replit-chapter_6b-orange?logo=replit "run in replit: chapter 6b")](https://replit.com/@dglazkov/Breadboard-Tutorial-Chapter-6-b)
 
-## Chapter 7: Probes
+## Chapter 6: Probes
 
 Let's explore another useful tool that is available in Breadboard. The `LogProbe` is a simple way to peek into what's happening in the Breadboard.
 
@@ -661,7 +659,7 @@ You can see the source code for this chapter here:
 
 [![Static Badge](https://img.shields.io/badge/run%20in%20replit-chapter_7b-orange?logo=replit "run in replit: chapter 7b")](https://replit.com/@dglazkov/Breadboard-Tutorial-Chapter-7-b)
 
-## Chapter 8: Continuous runs
+## Chapter 7: Continuous runs
 
 If all the while you were wondering why the method to run a board is called `runOnce` ("once"? why just once?!), this chapter has the answers.
 
@@ -718,7 +716,7 @@ See the source code for this chapter: [tutorial-8.js](./tutorial-8.js).
 
 [![Static Badge](https://img.shields.io/badge/run%20in%20replit-chapter_8-orange?logo=replit "run in replit: chapter 8")](https://replit.com/@dglazkov/Breadboard-Tutorial-Chapter-8)
 
-## Chapter 9: Let's build a chat bot.
+## Chapter 8: Let's build a chat bot.
 
 However, what if we want to keep going? Let's build a very, very simple chat bot. Unlike in previous chapters, here we'll make a tiny, yet full-fledged program, so we'll need a few more Javascript imports than usual:
 
