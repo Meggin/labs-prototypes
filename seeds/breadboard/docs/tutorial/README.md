@@ -139,11 +139,6 @@ result { hear: 'Doing okay' }
 
 input.wire("say->hear", output);
 
-
-input.wire("say->text", generateText);
-generateText.wire("completion->hear", output);
-The `generateText` node uses the [PaLM API](https://developers.generativeai.google/) to generate text. This node takes a `text` property as an input and returns a `completion` property.
-
 > **🔍✨ What happened here?**
 >
 > 1. The `runOnce` method of the board takes a property bag (a JS object) as its argument.
