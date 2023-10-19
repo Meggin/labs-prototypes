@@ -161,7 +161,9 @@ You can see its source code here: [tutorial-2.js](./tutorial-2.js).
 
 [![Static Badge](https://img.shields.io/badge/run%20in%20replit-chapter_2-orange?logo=replit "run in replit: chapter 2")](https://replit.com/@dglazkov/Breadboard-Tutorial-Chapter-2)
 
-## Chatper 2: Fun with wires
+## Chapter 2: Save, load, and visualize boards
+
+### Refactor code
 
 So far, we've built a fairly simple board. Let's use this board to learn a bit more about convenient shortcuts and ways to wire nodes together.
 
@@ -215,11 +217,7 @@ board
 
 It is more compact, but can be harder to read for those who are just starting to learn Breadboard. It's up to you to decide which style you prefer.
 
-You can see the source code from this chapter here: [tutorial-3.js](./tutorial-3.js).
-
-[![Static Badge](https://img.shields.io/badge/run%20in%20replit-chapter_3-orange?logo=replit "run in replit: chapter 3")](https://replit.com/@dglazkov/Breadboard-Tutorial-Chapter-3)
-
-## Chapter 3: Saving, loading, and visualizing boards
+### Save and load board
 
 Once the board is created, it can be used by the program that made it. But what if we want to reuse the board we made?
 
@@ -266,6 +264,8 @@ result { say: 'Hi, how are you?', hear: 'Doing alright.' }
 ```
 
 Saving and loading boards means that we can now share the boards with others outside of the programs we wrote, and that creates all kind of interesting possibilities.
+
+### Visualize board
 
 As the capstone for this chapter, let's draw some diagrams. Every board can be turned into a [Mermaid](https://mermaid.js.org/) diagram. All we need to do is call the `mermaid` method:
 
@@ -342,7 +342,7 @@ You can see this chapter's source code here: [tutorial-4.js](./tutorial-4.js).
 
 [![Static Badge](https://img.shields.io/badge/run%20in%20replit-chapter_4-orange?logo=replit "run in replit: chapter 4")](https://replit.com/@dglazkov/Breadboard-Tutorial-Chapter-4)
 
-## Chapter 4: Including other boards
+## Chapter 3: Including other boards
 
 In addition to loading saved boards, we can also include them into our board. For this, we need the `include` node, which acts as a sort of instant board-to-node converter: just give it the URL of a serialized board, and it will pretend as if that whole board is just one node.
 
@@ -447,7 +447,7 @@ You can see the source code for this chapter here: [tutorial-5.js](./tutorial-5.
 
 [![Static Badge](https://img.shields.io/badge/run%20in%20replit-chapter_5-orange?logo=replit "run in replit: chapter 5")](https://replit.com/@dglazkov/Breadboard-Tutorial-Chapter-5)
 
-## Chapter 5: Boards with slots
+## Chapter 4: Boards with slots
 
 Including other boards is nifty, since it allows us to build modular boards. However, sometimes we wish could leave a place in the board where anyone could insert other boards. Programmers call it "dependency injection".
 
@@ -548,7 +548,7 @@ You can see the source code for this chapter here:
 
 [![Static Badge](https://img.shields.io/badge/run%20in%20replit-chapter_6b-orange?logo=replit "run in replit: chapter 6b")](https://replit.com/@dglazkov/Breadboard-Tutorial-Chapter-6-b)
 
-## Chapter 6: Probes
+## Chapter 5: Probes
 
 Let's explore another useful tool that is available in Breadboard. The `LogProbe` is a simple way to peek into what's happening in the Breadboard.
 
@@ -654,7 +654,7 @@ You can see the source code for this chapter here:
 
 [![Static Badge](https://img.shields.io/badge/run%20in%20replit-chapter_7b-orange?logo=replit "run in replit: chapter 7b")](https://replit.com/@dglazkov/Breadboard-Tutorial-Chapter-7-b)
 
-## Chapter 7: Continuous runs
+## Chapter 6: Continuous runs
 
 If all the while you were wondering why the method to run a board is called `runOnce` ("once"? why just once?!), this chapter has the answers.
 
@@ -711,7 +711,7 @@ See the source code for this chapter: [tutorial-8.js](./tutorial-8.js).
 
 [![Static Badge](https://img.shields.io/badge/run%20in%20replit-chapter_8-orange?logo=replit "run in replit: chapter 8")](https://replit.com/@dglazkov/Breadboard-Tutorial-Chapter-8)
 
-## Chapter 8: Let's build a chat bot.
+## Chapter 7: Let's build a chat bot.
 
 However, what if we want to keep going? Let's build a very, very simple chat bot. Unlike in previous chapters, here we'll make a tiny, yet full-fledged program, so we'll need a few more Javascript imports than usual:
 
