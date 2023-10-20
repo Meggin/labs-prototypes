@@ -336,7 +336,9 @@ You can see this chapter's source code here: [tutorial-4.js](./tutorial-4.js).
 
 [![Static Badge](https://img.shields.io/badge/run%20in%20replit-chapter_4-orange?logo=replit "run in replit: chapter 4")](https://replit.com/@dglazkov/Breadboard-Tutorial-Chapter-4)
 
-## Chapter 3: Including other boards
+## Chapter 3: Including boards
+
+### Include board
 
 In addition to loading saved boards, we can also include them into our board. For this, we need the `include` node, which acts as a sort of instant board-to-node converter: just give it the URL of a serialized board, and it will pretend as if that whole board is just one node.
 
@@ -394,6 +396,8 @@ result {
 }
 ```
 
+### Create prompt
+
 Let's add a few more nodes to make the board that summarizes news on a given topic.
 
 First, we'll need a prompt that combines the topic we've provided, the headlines produced by our friend's board, and some instructions on what to do with them. To do that, we'll use the `promptTemplate` node from the [LLM Starter Kit](https://github.com/google/labs-prototypes/tree/main/seeds/llm-starter):
@@ -441,7 +445,7 @@ You can see the source code for this chapter here: [tutorial-5.js](./tutorial-5.
 
 [![Static Badge](https://img.shields.io/badge/run%20in%20replit-chapter_5-orange?logo=replit "run in replit: chapter 5")](https://replit.com/@dglazkov/Breadboard-Tutorial-Chapter-5)
 
-## Chapter 4: Boards with slots
+### Include board with slots
 
 Including other boards is nifty, since it allows us to build modular boards. However, sometimes we wish could leave a place in the board where anyone could insert other boards. Programmers call it "dependency injection".
 
@@ -542,7 +546,7 @@ You can see the source code for this chapter here:
 
 [![Static Badge](https://img.shields.io/badge/run%20in%20replit-chapter_6b-orange?logo=replit "run in replit: chapter 6b")](https://replit.com/@dglazkov/Breadboard-Tutorial-Chapter-6-b)
 
-## Chapter 5: Probes
+### Log what's happening
 
 Let's explore another useful tool that is available in Breadboard. The `LogProbe` is a simple way to peek into what's happening in the Breadboard.
 
@@ -648,7 +652,7 @@ You can see the source code for this chapter here:
 
 [![Static Badge](https://img.shields.io/badge/run%20in%20replit-chapter_7b-orange?logo=replit "run in replit: chapter 7b")](https://replit.com/@dglazkov/Breadboard-Tutorial-Chapter-7-b)
 
-## Chapter 6: Continuous runs
+## Chapter 5: Continuous runs
 
 If all the while you were wondering why the method to run a board is called `runOnce` ("once"? why just once?!), this chapter has the answers.
 
@@ -705,7 +709,7 @@ See the source code for this chapter: [tutorial-8.js](./tutorial-8.js).
 
 [![Static Badge](https://img.shields.io/badge/run%20in%20replit-chapter_8-orange?logo=replit "run in replit: chapter 8")](https://replit.com/@dglazkov/Breadboard-Tutorial-Chapter-8)
 
-## Chapter 7: Let's build a chat bot.
+## Chapter 6: Let's build a chat bot.
 
 However, what if we want to keep going? Let's build a very, very simple chat bot. Unlike in previous chapters, here we'll make a tiny, yet full-fledged program, so we'll need a few more Javascript imports than usual:
 
